@@ -1,0 +1,16 @@
+.lista-productos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+span {
+  margin-right: 12px;
+}
+
+.lista-categorias {
+  display: flex;
+  gap: 10px;
+}

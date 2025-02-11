@@ -1,4 +1,4 @@
 import { Routes } from '@angular/router';
-import { HelloComponent } from './hello/hello.component';
+import { PrincipalComponent } from './pages/principal/principal.component';
 
-export const routes: Routes = [{ path: 'hello', component: HelloComponent }];
+export const routes: Routes = [{ path: '', component: PrincipalComponent }];

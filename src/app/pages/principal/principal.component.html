@@ -1,0 +1,23 @@
+<div class="lista-categorias">
+  <section>
+    <span>Filtrar por categoría</span>
+    <mat-button-toggle-group
+      [(ngModel)]="categoriaSeleccionada"
+      (change)="listarProductosPorCategoria($event.value)"
+    >
+      @for (categoria of categorias; track categoria.id) {
+      <mat-button-toggle [value]="categoria.id">{{
+        categoria.nombre
+      }}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+  </section>
+  <button mat-button *ngIf="isFiltrado" (click)="limpiarFiltros()">
+    Quitar filtro<mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="lista-productos">
+  @for (producto of productos; track producto.id) {
+  <app-producto-card [producto]="producto"></app-producto-card>
+  }
+</div>
