@@ -2,7 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  max-width: 1000px;
   margin-top: 20px;
 }
 
@@ -13,4 +12,15 @@ span {
 .lista-categorias {
   display: flex;
   gap: 10px;
+}
+
+.contenido-principal {
+  display: flex;
+}
+
+.seleccion {
+  width: 67%;
+}
+.tabla-productos {
+  width: 33%;
 }

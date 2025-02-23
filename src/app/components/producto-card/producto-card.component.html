@@ -1,20 +1,24 @@
 <mat-card appearance="outlined" class="card">
   <mat-card-header>
-    <mat-card-title>{{ producto?.nombre }}</mat-card-title>
+    <mat-card-title>{{ producto.nombre }}</mat-card-title>
   </mat-card-header>
   <div class="imagen">
     <img
       mat-card-image
-      src="{{ producto?.imagenUrl }}"
+      src="{{ producto.imagenUrl }}"
       alt="Photo of a Shiba Inu"
     />
   </div>
   <mat-card-content>
-    <strong>Stock:</strong> {{ producto?.cantidad }}
-    <p>s/. {{ producto?.precio }}</p>
+    <strong>Stock:</strong> {{ producto.cantidad }}
+    <p>s/. {{ producto.precio }}</p>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-icon-button color="warn">
+    <button
+      mat-icon-button
+      color="warn"
+      (click)="seleccionarCantidad(producto)"
+    >
       <mat-icon>shopping_cart</mat-icon>
     </button>
   </mat-card-actions>

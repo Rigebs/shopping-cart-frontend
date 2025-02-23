@@ -11,6 +11,11 @@ import { CategoriaService } from '../../services/categoria.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { ProductosTableComponent } from '../../components/productos-table/productos-table.component';
+import { CarritoService } from '../../services/carrito.service';
+import { CarritoResponse } from '../../interfaces/carrito-response';
+import { AgregarItemRequest } from '../../interfaces/agregar-item-request';
+import { CrearCarritoRequest } from '../../interfaces/crear-carrito-request';
 
 @Component({
   selector: 'app-principal',
@@ -22,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatIconModule,
     FormsModule,
+    ProductosTableComponent,
   ],
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css',
@@ -30,24 +36,58 @@ export class PrincipalComponent {
   productos: ProductoResponse[] = [];
   categorias: CategoriaResponse[] = [];
 
+  carrito: CarritoResponse = {} as CarritoResponse;
+
   isFiltrado: boolean = false;
 
   categoriaSeleccionada: number | null = null;
 
+  productoSeleccionado: number = 0;
+
   constructor(
     private productoService: ProductoService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private carritoService: CarritoService
   ) {}
 
   ngOnInit(): void {
     this.listarProductos();
     this.listarCategorias();
+    this.obtenerCarrito();
   }
 
   listarProductos() {
     this.productoService.getProductos().subscribe({
       next: (response) => {
         this.productos = response;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  listarCategorias() {
+    this.categoriaService.getCategorias().subscribe({
+      next: (response) => {
+        this.categorias = response;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  obtenerCarrito() {
+    const carritoId = localStorage.getItem('carritoId');
+
+    if (!carritoId) {
+      return;
+    }
+
+    this.carritoService.getCarrito(Number(carritoId)).subscribe({
+      next: (response) => {
+        this.carrito = response;
       },
       error: (err) => {
         console.log(err);
@@ -67,20 +107,27 @@ export class PrincipalComponent {
     });
   }
 
-  listarCategorias() {
-    this.categoriaService.getCategorias().subscribe({
-      next: (response) => {
-        this.categorias = response;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
   limpiarFiltros() {
     this.isFiltrado = false;
     this.categoriaSeleccionada = null;
     this.listarProductos();
+  }
+
+  crearCarrito(crearCarrito: CrearCarritoRequest) {
+    this.carritoService.createCarrito(crearCarrito).subscribe({
+      next: (response) => {
+        localStorage.setItem('carritoId', response.extra);
+        this.obtenerCarrito();
+      },
+    });
+  }
+
+  agregarAlCarrito(agregarIten: AgregarItemRequest) {
+    this.carritoService.addItem(agregarIten).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.obtenerCarrito();
+      },
+    });
   }
 }
