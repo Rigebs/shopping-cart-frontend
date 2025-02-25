@@ -32,6 +32,11 @@
   <div class="tabla-productos">
     <p>Productos seleccionados</p>
     <br />
-    <app-productos-table [carrito]="carrito"></app-productos-table>
+    <app-productos-table
+      [carrito]="carrito"
+      (edit)="editarCantidad($event)"
+      (delete)="quitarItem($event)"
+      (pedido)="generarPedido($event)"
+    ></app-productos-table>
   </div>
 </div>

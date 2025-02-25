@@ -1,3 +1,11 @@
 .mat-mdc-cell {
   background-color: white;
 }
+
+.table-container {
+  overflow: auto;
+}
+
+.acciones {
+  display: flex;
+}

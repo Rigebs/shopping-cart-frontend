@@ -33,4 +33,20 @@ export class CarritoService {
       agregarCarritoRequest
     );
   }
+
+  updateCantidad(itemId: number, cantidad: number): Observable<ApiResponse> {
+    return this.httpClient.put<ApiResponse>(
+      `${this.apiUrl}/items/${itemId}`,
+      null,
+      {
+        params: { cantidad: cantidad },
+      }
+    );
+  }
+
+  deleteItem(itemId: number): Observable<ApiResponse> {
+    return this.httpClient.delete<ApiResponse>(
+      `${this.apiUrl}/items/${itemId}`
+    );
+  }
 }

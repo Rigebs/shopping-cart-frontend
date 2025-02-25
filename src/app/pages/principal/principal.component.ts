@@ -16,6 +16,9 @@ import { CarritoService } from '../../services/carrito.service';
 import { CarritoResponse } from '../../interfaces/carrito-response';
 import { AgregarItemRequest } from '../../interfaces/agregar-item-request';
 import { CrearCarritoRequest } from '../../interfaces/crear-carrito-request';
+import { NotificacionService } from '../../services/notificacion.service';
+import { PedidoRequest } from '../../interfaces/pedido-request';
+import { PedidoService } from '../../services/pedido.service';
 
 @Component({
   selector: 'app-principal',
@@ -47,7 +50,9 @@ export class PrincipalComponent {
   constructor(
     private productoService: ProductoService,
     private categoriaService: CategoriaService,
-    private carritoService: CarritoService
+    private carritoService: CarritoService,
+    private notificacionService: NotificacionService,
+    private pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
@@ -127,6 +132,46 @@ export class PrincipalComponent {
       next: (response) => {
         console.log(response);
         this.obtenerCarrito();
+      },
+    });
+  }
+
+  editarCantidad(editar: { itemId: number; cantidad: number }) {
+    this.carritoService
+      .updateCantidad(editar.itemId, editar.cantidad)
+      .subscribe({
+        next: (response) => {
+          this.notificacionService.mostrarMensaje(response.mensaje);
+          this.obtenerCarrito();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
+
+  quitarItem(itemId: number) {
+    this.carritoService.deleteItem(itemId).subscribe({
+      next: (response) => {
+        this.notificacionService.mostrarMensaje(response.mensaje);
+        this.obtenerCarrito();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  generarPedido(pedidoRequest: PedidoRequest) {
+    this.pedidoService.generatePedido(pedidoRequest).subscribe({
+      next: (response) => {
+        this.notificacionService.mostrarMensaje(response.mensaje);
+        localStorage.clear();
+        this.carrito = { total: 0, items: [] };
+        this.listarProductos();
+      },
+      error: (err) => {
+        console.log(err);
       },
     });
   }
