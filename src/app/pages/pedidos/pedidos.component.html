@@ -1,0 +1,22 @@
+<div class="pedidos">
+  <div class="lista-pedidos">
+    @for (pedido of pedidos; track pedido.id) {
+    <app-pedido-card
+      [pedido]="pedido"
+      [pedidoSeleccionadoId]="pedidoSeleccionadoId"
+      (pedidoId)="listarDetalles($event)"
+      (pagar)="pagarPedido($event)"
+      (cancelar)="cancelarPedido($event)"
+    ></app-pedido-card>
+    }
+  </div>
+  <div class="pedido-seleccionado">
+    @if (hayDetalles) {
+    <p>Detalles del pedido seleccionado:</p>
+    <br />
+    <app-detalles-pedido-info [detalles]="detalles"></app-detalles-pedido-info>
+    } @else {
+    <p>No hay pedido seleccionado</p>
+    }
+  </div>
+</div>

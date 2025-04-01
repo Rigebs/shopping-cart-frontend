@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,4 +12,14 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class AppComponent {
   title = 'shopping-cart-frontend';
+
+  constructor(private router: Router) {}
+
+  goToPedidos() {
+    this.router.navigateByUrl('/pedidos');
+  }
+
+  goToCarrito() {
+    this.router.navigateByUrl('/');
+  }
 }

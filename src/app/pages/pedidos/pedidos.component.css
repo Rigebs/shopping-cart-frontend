@@ -1,0 +1,18 @@
+.pedidos {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.lista-pedidos {
+  width: 40%;
+  max-height: 550px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pedido-seleccionado {
+  width: 50%;
+}

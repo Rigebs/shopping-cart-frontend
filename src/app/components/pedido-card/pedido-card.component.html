@@ -1,0 +1,30 @@
+<mat-card
+  appearance="outlined"
+  [ngClass]="{ seleccionado: pedido.id === pedidoSeleccionadoId }"
+>
+  <mat-card-content>
+    <p><strong>ID:</strong> {{ pedido.id }}</p>
+    <p><strong>Total:</strong> s/. {{ pedido.total }}</p>
+    <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+    <p>
+      <strong>Fecha del Pedido:</strong>
+      {{ pedido.fechaPedido | date : "dd/MM/yyyy hh:mm:ss a" }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    @if (pedido.estado !== 'CANCELADO' && pedido.estado !== 'PAGADO') {
+    <button mat-button color="warn" (click)="cancelarPedido(pedido.id)">
+      Cancelar
+      <mat-icon>close</mat-icon>
+    </button>
+    @if (!(pedido.estado === 'PAGADO')) {
+    <button mat-button color="warn" (click)="pagarPedido(pedido.id)">
+      Pagar
+      <mat-icon>shopping_bag</mat-icon>
+    </button>
+    } }
+    <button mat-icon-button color="warn" (click)="seleccionar(pedido.id)">
+      <mat-icon>visibility</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
